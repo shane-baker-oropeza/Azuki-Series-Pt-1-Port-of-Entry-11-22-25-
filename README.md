@@ -26,7 +26,7 @@ Competitor undercut our 6-year shipping contract by exactly 3%. Our supplier con
 - **Analyst:**  Shane Baker-Oropeza 
 - **Environment:**  Microsoft - Log Analytics Workspace (LAW - Cyber Range)  
 - **Timeframe:**  2025-11-19 → 2025-11-20
-- **Attack Type:** Fake Remote Session/Malicious Help Desk
+- **Attack Type:** Remote Access/Unauthorized Access
 
 ---
 
