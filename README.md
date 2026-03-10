@@ -9,24 +9,14 @@
 
 
 
-# 🛡️ Threat Hunt Report – The-Helpdesk-Deception-11-08-25
+# 🛡️ Threat Hunt Report – Azuki-Series-Pt-1-Port-of-Entry-11-22-25
 
 
 ---
 
 ## 📌 Scenario
 
-A routine support request should have ended with a reset and reassurance. Instead, the so-called “help” left behind a trail of anomalies that don’t add up.
-
-What was framed as troubleshooting looked more like an audit of the system itself — probing, cataloging, leaving subtle traces in its wake. Actions chained together in suspicious sequence: first gaining a foothold, then expanding reach, then preparing to linger long after the session ended.
-
-And just when the activity should have raised questions, a neat explanation appeared — a story planted in plain sight, designed to justify the very behavior that demanded scrutiny.
-
-This wasn’t remote assistance. It was a misdirection.
-
-Your mission this time is to reconstruct the timeline, connect the scattered remnants of this “support session”, and decide what was legitimate, and what was staged.
-
-The evidence is here. The question is whether you’ll see through the story or believe it.
+Competitor undercut our 6-year shipping contract by exactly 3%. Our supplier contracts and pricing data appeared on underground forums.
 
 
 ---
@@ -35,7 +25,7 @@ The evidence is here. The question is whether you’ll see through the story or 
 
 - **Analyst:**  Shane Baker-Oropeza 
 - **Environment:**  Microsoft - Log Analytics Workspace (LAW - Cyber Range)  
-- **Timeframe:**  2025-10-01 → 2025-10-15
+- **Timeframe:**  2025-11-19 → 2025-11-20
 - **Attack Type:** Fake Remote Session/Malicious Help Desk
 
 ---
@@ -67,43 +57,10 @@ The evidence is here. The question is whether you’ll see through the story or 
 
 # 🧠 Preparation
 
-<img width="655" height="304" alt="image" src="https://github.com/user-attachments/assets/b1c16415-33c4-43fb-a771-b5595fb8b812" />
-
-<img width="644" height="140" alt="image" src="https://github.com/user-attachments/assets/de5b5080-0279-4099-99fc-db3620b8673e" />
+<img width="643" height="761" alt="image" src="https://github.com/user-attachments/assets/58d580d9-da66-4f94-bbfb-f4d9bb1fde21" />
 
 
 ---
-
-### KQL Query Used
-
-```
-let start = datetime(2025-10-01);
-let end   = datetime(2025-10-15);
-DeviceFileEvents
-| where TimeGenerated between (datetime(2025-10-01) .. datetime(2025-10-15))
-| where FileName has_any ("desk", "help", "support", "tool")
-| project TimeGenerated, ActionType, DeviceName, FileName, FolderPath, InitiatingProcessAccountDomain, 
-InitiatingProcessFileName, InitiatingProcessFolderPath, InitiatingProcessCommandLine
-| order by TimeGenerated desc
-
-```
-- I decided to look in DeviceFileEvents since there were indications that malicious activity was originating from the Downloads folders.
-- I decided to look at a specified timeframe that started on 2025-10-01 till 2025-10-15.
-- I looked for the keywords "desk", "help", "support" and "tool" in any of the file folders.
-- I projected specific columns that would narrow down the information given and help me to focus on specific areas.
-- I found the DeviceName gab-intern-vm and I also found the suspicious FileName Support_701.txt.
-
----
-
-<img width="1860" height="408" alt="image" src="https://github.com/user-attachments/assets/87485515-b1db-4cda-995c-bcd47fdd9667" />
-</p>
-
-- This allowed me to answer the starting question and allow me to proceed to the first flag.
-</p>
-
-
-<img width="650" height="140" alt="image" src="https://github.com/user-attachments/assets/1b112c27-6bf0-4346-a77a-abce35d8f262" />
-</p>
 
 
 ## 🔍 Flag Analysis
@@ -117,11 +74,11 @@ _All flags below are collapsible for readability._
 
 # **Detection and Analysis**
 
-# Flag 1 - Initial Execution Detection  
+# Flag 1 - INITIAL ACCESS - Remote Access Source 
 [Table of Contents](#table-of-contents)
 
-<img width="644" height="382" alt="image" src="https://github.com/user-attachments/assets/c5200be3-2446-41b8-b505-9a6f87da9547" />
-<img width="647" height="168" alt="image" src="https://github.com/user-attachments/assets/f8712f19-b257-471d-a4b7-9a68d2c9e203" />
+<img width="642" height="670" alt="image" src="https://github.com/user-attachments/assets/a6ed935e-0859-4ee3-bfa3-03cbd9ecbe90" />
+
 
 
 - I used the table `DeviceProcessEvents` in order to examine the logs.
